@@ -1,6 +1,7 @@
 defmodule ConnectFour do
   defmodule Grid do
     @columns ["A", "B", "C", "D", "E", "F", "G"]
+    @rows 1..6
 
     def new() do
       for column <- @columns, into: %{} do
@@ -23,7 +24,7 @@ defmodule ConnectFour do
     end
 
     def rows do
-      for row <- 1..6 do
+      for row <- @rows do
         for column <- @columns do
           "#{column}#{row}"
         end
@@ -32,20 +33,20 @@ defmodule ConnectFour do
 
     def columns do
       for column <- @columns do
-        for row <- 1..6 do
+        for row <- @rows do
           "#{column}#{row}"
         end
       end
     end
 
     def up_right(row) do
-      for {column, row} <- @columns |> Stream.with_index(row), row in 1..6 do
+      for {column, row} <- @columns |> Stream.with_index(row), row in @rows do
         "#{column}#{row}"
       end
     end
 
     def up_left(row) do
-      for {column, row} <- @columns |> Enum.reverse() |> Stream.with_index(row), row in 1..6 do
+      for {column, row} <- @columns |> Enum.reverse() |> Stream.with_index(row), row in @rows do
         "#{column}#{row}"
       end
     end
@@ -63,7 +64,7 @@ defmodule ConnectFour do
     end
 
     def diagonals do
-      for row <- 1..6 do
+      for row <- @rows do
         [down_right(row), down_left(row), up_right(row), up_left(row)]
       end
       |> Stream.flat_map(& &1)
