@@ -142,4 +142,19 @@ defmodule ConnectFourTest do
       assert winner == :Y
     end
   end
+
+  describe "board limits" do
+    test "putting seven tokens in a column fails" do
+      grid =
+        Grid.new()
+        |> Grid.drop_token("A", :token)
+        |> Grid.drop_token("A", :token)
+        |> Grid.drop_token("A", :token)
+        |> Grid.drop_token("A", :token)
+        |> Grid.drop_token("A", :token)
+        |> Grid.drop_token("A", :token)
+
+      assert_raise ConnectFour.IllegalMove, fn -> Grid.drop_token(grid, "A", :token) end
+    end
+  end
 end

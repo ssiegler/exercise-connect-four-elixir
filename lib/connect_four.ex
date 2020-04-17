@@ -1,4 +1,8 @@
 defmodule ConnectFour do
+  defmodule IllegalMove do
+    defexception message: "illegal move"
+  end
+
   defmodule Grid do
     @columns ["A", "B", "C", "D", "E", "F", "G"]
     @rows 1..6
@@ -10,7 +14,11 @@ defmodule ConnectFour do
     end
 
     def drop_token(grid, column, token) do
-      Map.update!(grid, column, &[token | &1])
+      if (length(grid[column]) + 1) in @rows do
+        Map.update!(grid, column, &[token | &1])
+      else
+        raise IllegalMove, message: "column #{column} already full"
+      end
     end
 
     def token_at(grid, position) do
