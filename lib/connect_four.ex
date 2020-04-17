@@ -72,10 +72,7 @@ defmodule ConnectFour do
     end
 
     def diagonals do
-      for row <- @rows do
-        [down_right(row), down_left(row), up_right(row), up_left(row)]
-      end
-      |> Stream.flat_map(& &1)
+      Stream.flat_map(@rows, &[down_right(&1), down_right(&1), up_right(&1), up_left(&1)])
     end
   end
 
