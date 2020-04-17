@@ -78,8 +78,8 @@ defmodule ConnectFour do
 
   def winner(grid) do
     Stream.concat([Grid.rows(), Grid.columns(), Grid.diagonals()])
-    |> Stream.flat_map(&Enum.chunk_every(&1, 4, 1, :discard))
     |> Stream.map(fn positions -> Enum.map(positions, &Grid.token_at(grid, &1)) end)
+    |> Stream.flat_map(&Enum.chunk_every(&1, 4, 1, :discard))
     |> Enum.find_value(&ConnectFour.is_winner/1)
   end
 
