@@ -13,7 +13,7 @@ defmodule ConnectFour do
       end
     end
 
-    def drop_token(grid, column, token) do
+    def drop_token(grid, column, token) when column in @columns do
       if (length(grid[column]) + 1) in @rows do
         Map.update!(grid, column, &[token | &1])
       else
@@ -47,26 +47,26 @@ defmodule ConnectFour do
       end
     end
 
-    def up_right(row) do
+    def up_right(row) when row in @rows do
       for {column, row} <- @columns |> Stream.with_index(row), row in @rows do
         "#{column}#{row}"
       end
     end
 
-    def up_left(row) do
+    def up_left(row) when row in @rows do
       for {column, row} <- @columns |> Enum.reverse() |> Stream.with_index(row), row in @rows do
         "#{column}#{row}"
       end
     end
 
-    def down_right(row) do
+    def down_right(row) when row in @rows do
       for {column, row} <- @columns |> Stream.take(row) |> Enum.reverse() |> Stream.with_index(1) do
         "#{column}#{row}"
       end
     end
 
-    def down_left(row) do
-      for {column, row} <- @columns |> Enum.slice(-row..0) |> Stream.with_index(1) do
+    def down_left(row) when row in @rows do
+      for {column, row} <- @columns |> Enum.reverse() |> Stream.take(row) |> Stream.with_index(1) do
         "#{column}#{row}"
       end
     end
